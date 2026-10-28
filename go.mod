@@ -1,4 +1,4 @@
-module github.com/aadegtyarev/firefox-site-wrapper
+module github.com/aadegtyarev/site-wrapper
 
 go 1.25
 

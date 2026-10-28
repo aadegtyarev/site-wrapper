@@ -1,4 +1,4 @@
-package io.github.aadegtyarev.sitewrap
+package io.github.aadegtyarev.sitewrapper
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

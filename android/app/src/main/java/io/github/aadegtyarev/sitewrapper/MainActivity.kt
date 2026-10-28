@@ -1,4 +1,4 @@
-package io.github.aadegtyarev.sitewrap
+package io.github.aadegtyarev.sitewrapper
 
 import android.app.Activity
 import android.content.Intent
@@ -56,7 +56,7 @@ class MainActivity : Activity() {
         setContentView(root)
         launchUrl = intent.dataString?.takeIf { candidate -> Config(candidate, 100, "window", "en").error() == null }
         if (intent.dataString != null && launchUrl == null) {
-            Log.w("Sitewrap", "Invalid external URL")
+            Log.w("Site Wrapper", "Invalid external URL")
             showError("invalidUrl") { if (config == null) showSettings(true) else showSite() }
             return
         }
@@ -144,7 +144,7 @@ class MainActivity : Activity() {
                 if (store.verify(password.text.toString())) showSettings(false)
                 else { error.text = word("incorrectPassword"); password.text.clear() }
             } catch (failure: Exception) {
-                Log.e("Sitewrap", "Password verifier failed", failure)
+                Log.e("Site Wrapper", "Password verifier failed", failure)
                 error.text = word("configFailed")
             }
         }
@@ -177,10 +177,10 @@ class MainActivity : Activity() {
             isFocusable = true
             setOnClickListener {
                 try {
-                    val link = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/aadegtyarev/firefox-site-wrapper"))
+                    val link = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/aadegtyarev/site-wrapper"))
                     startActivity(Intent.createChooser(link, text))
                 } catch (failure: Exception) {
-                    Log.e("Sitewrap", "Repository link failed", failure)
+                    Log.e("Site Wrapper", "Repository link failed", failure)
                     Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
                 }
             }
@@ -215,7 +215,7 @@ class MainActivity : Activity() {
                 if (launchUrl == null) currentUrl = draft.url
                 showSite()
             } catch (failure: Exception) {
-                Log.e("Sitewrap", "Settings save failed", failure)
+                Log.e("Site Wrapper", "Settings save failed", failure)
                 error.text = word("saveFailed")
             }
         }
@@ -270,7 +270,7 @@ class MainActivity : Activity() {
                     if (scheme in listOf("mailto", "tel", "sms", "geo")) {
                         try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(request.uri))) }
                         catch (failure: Exception) {
-                            Log.e("Sitewrap", "External link failed", failure)
+                            Log.e("Site Wrapper", "External link failed", failure)
                             Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
                         }
                     } else Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
@@ -278,7 +278,7 @@ class MainActivity : Activity() {
                 return GeckoResult.fromValue(AllowOrDeny.DENY)
             }
             override fun onLoadError(session: GeckoSession, uri: String?, error: WebRequestError): GeckoResult<String>? {
-                Log.e("Sitewrap", "Site load failed: ${error.code}")
+                Log.e("Site Wrapper", "Site load failed: ${error.code}")
                 runOnUiThread { showError("loadFailed") { showSite() } }
                 return null
             }
@@ -290,7 +290,7 @@ class MainActivity : Activity() {
         })
         opened.open(runtime)
         view.setSession(opened)
-        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@sitewrap").accept({ extension: WebExtension? ->
+        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@site-wrapper").accept({ extension: WebExtension? ->
             runOnUiThread {
                 if (this.session !== opened) return@runOnUiThread
                 if (extension == null) showError("extensionFailed") { showSite() }
@@ -300,12 +300,12 @@ class MainActivity : Activity() {
                             val percent = if ((message as? JSONObject)?.optString("action") == "zoom") saved.zoom else 100
                             return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
                         }
-                    }, "sitewrap")
+                    }, "site-wrapper")
                     opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
                 }
             }
         }, { failure: Throwable? ->
-            Log.e("Sitewrap", "Zoom extension failed", failure)
+            Log.e("Site Wrapper", "Zoom extension failed", failure)
             runOnUiThread { showError("extensionFailed") { showSite() } }
         })
     }

@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 )
 
-const NativeHostName = "io.github.aadegtyarev.sitewrap"
-const ExtensionID = "sitewrap@aadegtyarev.github.io"
+const NativeHostName = "io.github.aadegtyarev.sitewrapper"
+const ExtensionID = "site-wrapper@aadegtyarev.github.io"
 
 type hostManifest struct {
 	Name              string   `json:"name"`
@@ -23,7 +23,7 @@ func writeHostManifest(path, executable string) error {
 		return errors.New("native host executable path must be absolute")
 	}
 	manifest := hostManifest{
-		Name: NativeHostName, Description: "Sitewrap settings helper", Path: executable,
+		Name: NativeHostName, Description: "Site Wrapper settings helper", Path: executable,
 		Type: "stdio", AllowedExtensions: []string{ExtensionID},
 	}
 	data, err := json.MarshalIndent(manifest, "", "  ")

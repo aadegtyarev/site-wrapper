@@ -8,6 +8,7 @@ Applies to every application-owned screen on desktop and Android. Website conten
 
 ## Observable rules
 
+- The application and extension display the product name `Site Wrapper`. Firefox is named only when describing the browser dependency or its trademark.
 - Use a modern, restrained visual language: one primary accent color, system-friendly typography, consistent spacing, and little decoration.
 - Each screen has one visually clear primary action. Secondary actions remain easy to find without competing with it.
 - Layouts adapt to narrow phones and desktop windows. Long German and Kazakh labels wrap without clipping controls or actions.

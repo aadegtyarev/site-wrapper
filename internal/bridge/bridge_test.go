@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 func TestNativeMessageRoundTrip(t *testing.T) {

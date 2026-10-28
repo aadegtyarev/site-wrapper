@@ -148,7 +148,7 @@ func Path() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(dir, "firefox-site-wrapper", "settings.json"), nil
+	return filepath.Join(dir, "site-wrapper", "settings.json"), nil
 }
 
 func EffectiveURL(saved, override string) (string, error) {

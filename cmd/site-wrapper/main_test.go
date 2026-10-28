@@ -21,10 +21,10 @@ func TestFirefoxArgs(t *testing.T) {
 }
 
 func TestNativeHostInvocation(t *testing.T) {
-	if !isNativeHostInvocation([]string{"/home/user/.mozilla/native-messaging-hosts/io.github.aadegtyarev.sitewrap.json", "sitewrap@aadegtyarev.github.io"}) {
+	if !isNativeHostInvocation([]string{"/home/user/.mozilla/native-messaging-hosts/io.github.aadegtyarev.sitewrapper.json", "site-wrapper@aadegtyarev.github.io"}) {
 		t.Fatal("Firefox native host arguments not recognized")
 	}
-	if isNativeHostInvocation([]string{"https://example.org", "sitewrap@aadegtyarev.github.io"}) {
+	if isNativeHostInvocation([]string{"https://example.org", "site-wrapper@aadegtyarev.github.io"}) {
 		t.Fatal("URL treated as native host invocation")
 	}
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const HOST = "io.github.aadegtyarev.sitewrap";
+const HOST = "io.github.aadegtyarev.sitewrapper";
 let startup = null;
 let booting = null;
 
@@ -51,7 +51,7 @@ async function bootstrap() {
       }
     } catch (error) {
       const errorId = crypto.randomUUID();
-      console.error("Sitewrap startup failed", errorId, error);
+      console.error("Site Wrapper startup failed", errorId, error);
       await browser.windows.create({ url: browser.runtime.getURL("error.html?id=" + encodeURIComponent(errorId)), type: "popup", width: 560, height: 360 });
     }
   })();
@@ -85,6 +85,6 @@ browser.tabs.onUpdated.addListener((tabId, change) => {
   if (change.status === "complete" && startup?.settings?.zoom_percent) {
     void browser.tabs.get(tabId).then(tab => {
       if (/^https?:\/\//.test(tab.url || "")) return browser.tabs.setZoom(tabId, startup.settings.zoom_percent / 100);
-    }).catch(error => console.error("Sitewrap zoom failed", error));
+    }).catch(error => console.error("Site Wrapper zoom failed", error));
   }
 });

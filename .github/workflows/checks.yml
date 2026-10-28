@@ -37,10 +37,10 @@ jobs:
         include:
           - target: linux
             goos: linux
-            output: sitewrap
+            output: site-wrapper
           - target: windows
             goos: windows
-            output: sitewrap.exe
+            output: site-wrapper.exe
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6
@@ -50,9 +50,9 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
           CGO_ENABLED: '0'
-        run: go build -ldflags "-X main.version=${GITHUB_SHA::7}" -o "dist/${{ matrix.output }}" ./cmd/sitewrap
+        run: go build -ldflags "-X main.version=${GITHUB_SHA::7}" -o "dist/${{ matrix.output }}" ./cmd/site-wrapper
       - name: Package unsigned extension
-        run: python3 scripts/package-extension.py dist/sitewrap@aadegtyarev.github.io.xpi
+        run: python3 scripts/package-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
       - uses: actions/upload-artifact@v6
         with:
           name: desktop-${{ matrix.target }}-unsigned

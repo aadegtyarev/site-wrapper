@@ -1,4 +1,4 @@
-# Firefox Site Wrapper
+# Site Wrapper
 
 Небольшое приложение для запуска заданного сайта на движке Firefox/Gecko.
 
@@ -48,7 +48,7 @@ make android-check
 
 Для Android CI собирает отладочные APK отдельно для `arm64-v8a`, `armeabi-v7a` и `x86_64`. Выбирайте APK под архитектуру устройства; общий APK с тремя архитектурами был около 509 МБ. `make android-check` загружает SDK и Gradle в Docker-тома, запускает тесты, Lint и сборку, не устанавливая инструменты в систему. Первый запуск принимает лицензии Android SDK. GeckoView берётся как готовая зависимость Mozilla, браузер из исходников не собирается.
 
-Desktop: `sitewrap [URL]`, `sitewrap run [URL]`, `sitewrap version`. Первый запуск открывает настройку, затем сайт. Настройки открываются `Ctrl+Alt+S` или кнопкой в оконном режиме. Android принимает ссылку через системное действие «Открыть с помощью». В киоске Android настройки открываются удержанием двух пальцев 1,8 секунды.
+Desktop: `site-wrapper [URL]`, `site-wrapper run [URL]`, `site-wrapper version`. Первый запуск открывает настройку, затем сайт. Настройки открываются `Ctrl+Alt+S` или кнопкой в оконном режиме. Android принимает ссылку через системное действие «Открыть с помощью». В киоске Android настройки открываются удержанием двух пальцев 1,8 секунды.
 
 Перед публикацией нужно подписать desktop XPI, проверить запуск и переходы на Linux и Windows, а Android — на реальном устройстве. Масштаб Android применяется CSS `zoom` через встроенное расширение GeckoView; он требует проверки на целевых сайтах, поскольку ведёт себя иначе, чем масштаб вкладки Firefox на desktop.
 
@@ -62,4 +62,4 @@ Desktop: `sitewrap [URL]`, `sitewrap run [URL]`, `sitewrap version`. Первы�
 
 ## Товарный знак
 
-Firefox is a trademark of the Mozilla Foundation in the U.S. and other countries. This project is independent and is not affiliated with Mozilla. Согласно [правилам Mozilla](https://www.mozilla.org/en-US/foundation/trademarks/policy/), эта атрибуция не даёт права использовать Firefox в названии стороннего приложения; перед выпуском название нужно согласовать с Mozilla либо выбрать независимое имя.
+Firefox is a trademark of the Mozilla Foundation in the U.S. and other countries. This project is independent and is not affiliated with Mozilla. Название Site Wrapper не использует товарный знак Firefox; зависимость от браузера указана отдельно.

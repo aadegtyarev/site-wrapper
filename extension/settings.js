@@ -1,6 +1,6 @@
 import { text, validateDraft } from "./i18n.mjs";
 
-const hostName = "io.github.aadegtyarev.sitewrap";
+const hostName = "io.github.aadegtyarev.sitewrapper";
 const $ = id => document.getElementById(id);
 let language = "en";
 let firstSetup = false;
@@ -46,7 +46,7 @@ async function host(message) {
   try {
     return await browser.runtime.sendNativeMessage(hostName, message);
   } catch (error) {
-    console.error("Sitewrap native helper unavailable", error);
+    console.error("Site Wrapper native helper unavailable", error);
     notice("bridgeFailed");
     return null;
   }
@@ -67,7 +67,7 @@ async function start() {
       $("unlock-form").hidden = false;
     }
   } catch (error) {
-    console.error("Sitewrap settings startup failed", error);
+    console.error("Site Wrapper settings startup failed", error);
     notice("startupFailed");
   }
 }
@@ -115,7 +115,7 @@ $("settings-form").addEventListener("submit", async event => {
     const current = await browser.windows.getCurrent();
     await browser.windows.remove(current.id);
   } catch (error) {
-    console.error("Sitewrap could not open site", error);
+    console.error("Site Wrapper could not open site", error);
     notice("startupFailed");
   }
 });

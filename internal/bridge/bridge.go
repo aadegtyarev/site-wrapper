@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 const maxMessageBytes = 1024 * 1024

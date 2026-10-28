@@ -14,7 +14,7 @@ func InstallHost(executable string) error {
 	if err != nil {
 		return err
 	}
-	path := filepath.Join(dir, "firefox-site-wrapper", "native-host.json")
+	path := filepath.Join(dir, "site-wrapper", "native-host.json")
 	if err := writeHostManifest(path, executable); err != nil {
 		return err
 	}

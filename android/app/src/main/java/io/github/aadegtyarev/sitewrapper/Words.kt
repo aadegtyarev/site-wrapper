@@ -1,4 +1,4 @@
-package io.github.aadegtyarev.sitewrap
+package io.github.aadegtyarev.sitewrapper
 
 object Words {
     private val en = mapOf(
@@ -12,8 +12,8 @@ object Words {
         "passwordShort" to "Use at least 12 characters.", "passwordMismatch" to "Passwords do not match.",
         "incorrectPassword" to "Incorrect password. Try again.", "saveFailed" to "Changes were not saved. Check device storage and try again.",
         "loadFailed" to "The site could not load. Check your connection or change the URL in settings.",
-        "configFailed" to "Settings could not be read. Check device storage or reinstall Sitewrap.",
-        "extensionFailed" to "Page zoom could not be enabled. Restart or reinstall Sitewrap.",
+        "configFailed" to "Settings could not be read. Check device storage or reinstall Site Wrapper.",
+        "extensionFailed" to "Page zoom could not be enabled. Restart or reinstall Site Wrapper.",
         "unsupportedLink" to "This link needs another app or a web address."
     )
     private val de = mapOf(
@@ -27,8 +27,8 @@ object Words {
         "passwordShort" to "Mindestens 12 Zeichen verwenden.", "passwordMismatch" to "Die Passwörter stimmen nicht überein.",
         "incorrectPassword" to "Falsches Passwort. Erneut versuchen.", "saveFailed" to "Änderungen nicht gespeichert. Gerätespeicher prüfen und erneut versuchen.",
         "loadFailed" to "Website konnte nicht geladen werden. Verbindung prüfen oder Adresse in den Einstellungen ändern.",
-        "configFailed" to "Einstellungen konnten nicht gelesen werden. Gerätespeicher prüfen oder Sitewrap neu installieren.",
-        "extensionFailed" to "Seitenzoom konnte nicht aktiviert werden. Sitewrap neu starten oder neu installieren.",
+        "configFailed" to "Einstellungen konnten nicht gelesen werden. Gerätespeicher prüfen oder Site Wrapper neu installieren.",
+        "extensionFailed" to "Seitenzoom konnte nicht aktiviert werden. Site Wrapper neu starten oder neu installieren.",
         "unsupportedLink" to "Für diesen Link wird eine andere App oder eine Webadresse benötigt."
     )
     private val kk = mapOf(
@@ -42,8 +42,8 @@ object Words {
         "passwordShort" to "Кемінде 12 таңба пайдаланыңыз.", "passwordMismatch" to "Құпиясөздер сәйкес келмейді.",
         "incorrectPassword" to "Құпиясөз қате. Қайталап көріңіз.", "saveFailed" to "Өзгерістер сақталмады. Құрылғы жадын тексеріп, қайталаңыз.",
         "loadFailed" to "Сайт жүктелмеді. Байланысты тексеріңіз немесе баптаулардан мекенжайды өзгертіңіз.",
-        "configFailed" to "Баптаулар оқылмады. Құрылғы жадын тексеріңіз немесе Sitewrap қолданбасын қайта орнатыңыз.",
-        "extensionFailed" to "Бет масштабы қосылмады. Sitewrap қолданбасын қайта іске қосыңыз немесе орнатыңыз.",
+        "configFailed" to "Баптаулар оқылмады. Құрылғы жадын тексеріңіз немесе Site Wrapper қолданбасын қайта орнатыңыз.",
+        "extensionFailed" to "Бет масштабы қосылмады. Site Wrapper қолданбасын қайта іске қосыңыз немесе орнатыңыз.",
         "unsupportedLink" to "Бұл сілтеме үшін басқа қолданба немесе веб-мекенжай қажет."
     )
     private val it = mapOf(
@@ -57,8 +57,8 @@ object Words {
         "passwordShort" to "Usa almeno 12 caratteri.", "passwordMismatch" to "Le password non coincidono.",
         "incorrectPassword" to "Password errata. Riprova.", "saveFailed" to "Modifiche non salvate. Controlla la memoria del dispositivo e riprova.",
         "loadFailed" to "Impossibile caricare il sito. Controlla la connessione o modifica l'indirizzo nelle impostazioni.",
-        "configFailed" to "Impossibile leggere le impostazioni. Controlla la memoria o reinstalla Sitewrap.",
-        "extensionFailed" to "Impossibile attivare lo zoom. Riavvia o reinstalla Sitewrap.",
+        "configFailed" to "Impossibile leggere le impostazioni. Controlla la memoria o reinstalla Site Wrapper.",
+        "extensionFailed" to "Impossibile attivare lo zoom. Riavvia o reinstalla Site Wrapper.",
         "unsupportedLink" to "Questo link richiede un'altra app o un indirizzo web."
     )
     fun get(language: String, key: String) = mapOf("de" to de, "kk" to kk, "it" to it)[language]?.get(key) ?: en[key] ?: key

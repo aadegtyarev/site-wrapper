@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 func TestFindFirefoxUsesExplicitBinary(t *testing.T) {

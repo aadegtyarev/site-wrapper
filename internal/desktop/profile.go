@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 func WriteProfilePreferences(profile string, language settings.Language) error {

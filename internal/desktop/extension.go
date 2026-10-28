@@ -18,7 +18,7 @@ func InstallExtension(executable, profile string) error {
 	if err := os.MkdirAll(dir, 0700); err != nil {
 		return err
 	}
-	out, err := os.CreateTemp(dir, ".sitewrap-*.xpi")
+	out, err := os.CreateTemp(dir, ".site-wrapper-*.xpi")
 	if err != nil {
 		return err
 	}

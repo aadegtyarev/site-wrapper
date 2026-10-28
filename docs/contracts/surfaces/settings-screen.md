@@ -12,7 +12,7 @@ The application-owned setup and settings screen. Desktop and Android use the sam
 - Later access asks for the settings password, then opens the same settings screen. Wrong passwords show an error and allow retry.
 - URL accepts an absolute HTTP(S) address without embedded credentials. Zoom accepts 30–500%, inclusive, with 100% as default.
 - Mode selects `window` or `kiosk`. Language selects English, German, Kazakh, or Italian; English is default. Changing language updates app-owned labels immediately.
-- Version is shown read-only on the screen, sourced from build metadata. A link to the public source repository and Mozilla trademark attribution are visible on the same screen.
+- Version is shown read-only on the screen, sourced from build metadata. A link to `aadegtyarev/site-wrapper` and Mozilla trademark attribution are visible on the same screen.
 - Existing passwords can be changed after unlock. Password creation and change require confirmation and reject mismatches.
 - Save validates all fields before writing. Cancel discards unsaved changes. A CLI or Intent URL override affects only the current launch and never rewrites the saved URL.
 

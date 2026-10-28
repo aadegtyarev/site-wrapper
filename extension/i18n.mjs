@@ -11,9 +11,9 @@ export const messages = {
     invalidZoom: "Choose a zoom between 30% and 500%.", passwordRequired: "Create a settings password.",
     passwordShort: "Use at least 12 characters.", passwordMismatch: "Passwords do not match.",
     incorrectPassword: "That password is incorrect. Try again.", saveFailed: "Changes were not saved. Check storage and try again.",
-    bridgeFailed: "Cannot reach the app helper. Restart Sitewrap or repair the installation.",
-    startupFailed: "Settings could not be loaded. Restart Sitewrap or repair the installation.",
-    errorTitle: "Sitewrap could not start", errorBody: "Restart Sitewrap or repair the installation. Details are available in the Firefox Browser Console.",
+    bridgeFailed: "Cannot reach the app helper. Restart Site Wrapper or repair the installation.",
+    startupFailed: "Settings could not be loaded. Restart Site Wrapper or repair the installation.",
+    errorTitle: "Site Wrapper could not start", errorBody: "Restart Site Wrapper or repair the installation. Details are available in the Firefox Browser Console.",
     setupInstructions: "Setup instructions", errorId: "Error ID:"
   },
   de: {
@@ -28,9 +28,9 @@ export const messages = {
     invalidZoom: "Einen Zoom zwischen 30 % und 500 % wählen.", passwordRequired: "Ein Passwort für Einstellungen festlegen.",
     passwordShort: "Mindestens 12 Zeichen verwenden.", passwordMismatch: "Die Passwörter stimmen nicht überein.",
     incorrectPassword: "Falsches Passwort. Erneut versuchen.", saveFailed: "Änderungen wurden nicht gespeichert. Speicher prüfen und erneut versuchen.",
-    bridgeFailed: "Die App-Hilfskomponente ist nicht erreichbar. Sitewrap neu starten oder die Installation reparieren.",
-    startupFailed: "Einstellungen konnten nicht geladen werden. Sitewrap neu starten oder die Installation reparieren.",
-    errorTitle: "Sitewrap konnte nicht starten", errorBody: "Sitewrap neu starten oder die Installation reparieren. Details stehen in der Firefox-Browserkonsole.",
+    bridgeFailed: "Die App-Hilfskomponente ist nicht erreichbar. Site Wrapper neu starten oder die Installation reparieren.",
+    startupFailed: "Einstellungen konnten nicht geladen werden. Site Wrapper neu starten oder die Installation reparieren.",
+    errorTitle: "Site Wrapper konnte nicht starten", errorBody: "Site Wrapper neu starten oder die Installation reparieren. Details stehen in der Firefox-Browserkonsole.",
     setupInstructions: "Einrichtungsanleitung", errorId: "Fehler-ID:"
   },
   kk: {
@@ -45,9 +45,9 @@ export const messages = {
     invalidZoom: "Масштабты 30%-дан 500%-ға дейін таңдаңыз.", passwordRequired: "Баптауларға құпиясөз орнатыңыз.",
     passwordShort: "Кемінде 12 таңба пайдаланыңыз.", passwordMismatch: "Құпиясөздер сәйкес келмейді.",
     incorrectPassword: "Құпиясөз қате. Қайталап көріңіз.", saveFailed: "Өзгерістер сақталмады. Жадты тексеріп, қайталап көріңіз.",
-    bridgeFailed: "Қолданбаның көмекші бөлігі қолжетімсіз. Sitewrap қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз.",
-    startupFailed: "Баптаулар жүктелмеді. Sitewrap қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз.",
-    errorTitle: "Sitewrap іске қосылмады", errorBody: "Sitewrap қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз. Толығырақ Firefox браузер консолінде көрсетілген.",
+    bridgeFailed: "Қолданбаның көмекші бөлігі қолжетімсіз. Site Wrapper қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз.",
+    startupFailed: "Баптаулар жүктелмеді. Site Wrapper қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз.",
+    errorTitle: "Site Wrapper іске қосылмады", errorBody: "Site Wrapper қолданбасын қайта іске қосыңыз немесе орнатуды түзетіңіз. Толығырақ Firefox браузер консолінде көрсетілген.",
     setupInstructions: "Орнату нұсқаулығы", errorId: "Қате нөмірі:"
   },
   it: {
@@ -62,9 +62,9 @@ export const messages = {
     invalidZoom: "Scegli uno zoom tra il 30% e il 500%.", passwordRequired: "Crea una password per le impostazioni.",
     passwordShort: "Usa almeno 12 caratteri.", passwordMismatch: "Le password non coincidono.",
     incorrectPassword: "Password errata. Riprova.", saveFailed: "Modifiche non salvate. Controlla la memoria e riprova.",
-    bridgeFailed: "Impossibile raggiungere il componente dell'app. Riavvia Sitewrap o ripara l'installazione.",
-    startupFailed: "Impossibile caricare le impostazioni. Riavvia Sitewrap o ripara l'installazione.",
-    errorTitle: "Impossibile avviare Sitewrap", errorBody: "Riavvia Sitewrap o ripara l'installazione. I dettagli sono nella console del browser Firefox.",
+    bridgeFailed: "Impossibile raggiungere il componente dell'app. Riavvia Site Wrapper o ripara l'installazione.",
+    startupFailed: "Impossibile caricare le impostazioni. Riavvia Site Wrapper o ripara l'installazione.",
+    errorTitle: "Impossibile avviare Site Wrapper", errorBody: "Riavvia Site Wrapper o ripara l'installazione. I dettagli sono nella console del browser Firefox.",
     setupInstructions: "Istruzioni di installazione", errorId: "ID errore:"
   }
 };

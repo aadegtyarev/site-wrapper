@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 const DownloadURL = "https://www.firefox.com/"

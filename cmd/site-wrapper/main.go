@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/bridge"
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/desktop"
-	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
+	"github.com/aadegtyarev/site-wrapper/internal/bridge"
+	"github.com/aadegtyarev/site-wrapper/internal/desktop"
+	"github.com/aadegtyarev/site-wrapper/internal/settings"
 )
 
 var version = "dev"
@@ -37,7 +37,7 @@ func execute(args []string) error {
 			fmt.Println(version)
 			return nil
 		case "--help", "help":
-			fmt.Println("Usage: sitewrap [run] [HTTP(S) URL] | sitewrap version")
+			fmt.Println("Usage: site-wrapper [run] [HTTP(S) URL] | site-wrapper version")
 			return nil
 		case "run":
 			args = args[1:]
@@ -75,7 +75,7 @@ func serveNativeHost() error {
 		return fmt.Errorf("write native response: %w", err)
 	}
 	if handleErr != nil {
-		fmt.Fprintf(os.Stderr, "sitewrap native request failed: %s\n", response.ErrorCode)
+		fmt.Fprintf(os.Stderr, "site-wrapper native request failed: %s\n", response.ErrorCode)
 	}
 	return nil
 }

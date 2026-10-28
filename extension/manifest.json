@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Sitewrap",
+  "name": "Site Wrapper",
   "version": "0.1.0",
-  "description": "Firefox window and settings for Sitewrap",
+  "description": "Firefox window and settings for Site Wrapper",
   "browser_specific_settings": {
     "gecko": {
-      "id": "sitewrap@aadegtyarev.github.io",
+      "id": "site-wrapper@aadegtyarev.github.io",
       "strict_min_version": "142.0",
       "data_collection_permissions": {
         "required": ["authenticationInfo", "browsingActivity"]
@@ -26,7 +26,7 @@
   "commands": {
     "open-settings": {
       "suggested_key": { "default": "Ctrl+Alt+S" },
-      "description": "Open Sitewrap settings"
+      "description": "Open Site Wrapper settings"
     }
   }
 }

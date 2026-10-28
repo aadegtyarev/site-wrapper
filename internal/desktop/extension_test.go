@@ -8,7 +8,7 @@ import (
 
 func TestInstallExtensionCopiesPackageIntoProfile(t *testing.T) {
 	dir := t.TempDir()
-	executable := filepath.Join(dir, "sitewrap")
+	executable := filepath.Join(dir, "site-wrapper")
 	source := filepath.Join(dir, ExtensionID+".xpi")
 	if err := os.WriteFile(source, []byte("signed-xpi-placeholder"), 0600); err != nil {
 		t.Fatal(err)
@@ -24,7 +24,7 @@ func TestInstallExtensionCopiesPackageIntoProfile(t *testing.T) {
 }
 
 func TestInstallExtensionReportsMissingPackage(t *testing.T) {
-	if err := InstallExtension(filepath.Join(t.TempDir(), "sitewrap"), t.TempDir()); err == nil {
+	if err := InstallExtension(filepath.Join(t.TempDir(), "site-wrapper"), t.TempDir()); err == nil {
 		t.Fatal("missing XPI was not reported")
 	}
 }

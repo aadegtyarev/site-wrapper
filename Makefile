@@ -10,8 +10,8 @@ extension-check:
 
 desktop-package:
 	mkdir -p dist
-	docker run --rm --user $$(id -u):$$(id -g) --env GOCACHE=/tmp/gocache --env GOPATH=/tmp/gopath --volume "$$(pwd):/src" --workdir /src golang:1.25 go build -o dist/sitewrap ./cmd/sitewrap
-	docker run --rm --user $$(id -u):$$(id -g) --volume "$$(pwd):/src" --workdir /src python:3.13-alpine python scripts/package-extension.py dist/sitewrap@aadegtyarev.github.io.xpi
+	docker run --rm --user $$(id -u):$$(id -g) --env GOCACHE=/tmp/gocache --env GOPATH=/tmp/gopath --volume "$$(pwd):/src" --workdir /src golang:1.25 go build -o dist/site-wrapper ./cmd/site-wrapper
+	docker run --rm --user $$(id -u):$$(id -g) --volume "$$(pwd):/src" --workdir /src python:3.13-alpine python scripts/package-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
 
 android-check:
 	bash scripts/android-docker.sh

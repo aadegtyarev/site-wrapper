@@ -9,7 +9,7 @@ import (
 
 func TestWriteHostManifest(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "host.json")
-	if err := writeHostManifest(path, "/opt/sitewrap/sitewrap"); err != nil {
+	if err := writeHostManifest(path, "/opt/site-wrapper/site-wrapper"); err != nil {
 		t.Fatal(err)
 	}
 	data, err := os.ReadFile(path)
@@ -20,7 +20,7 @@ func TestWriteHostManifest(t *testing.T) {
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if manifest.Name != NativeHostName || manifest.Path != "/opt/sitewrap/sitewrap" || len(manifest.AllowedExtensions) != 1 || manifest.AllowedExtensions[0] != ExtensionID {
+	if manifest.Name != NativeHostName || manifest.Path != "/opt/site-wrapper/site-wrapper" || len(manifest.AllowedExtensions) != 1 || manifest.AllowedExtensions[0] != ExtensionID {
 		t.Fatalf("unexpected manifest: %+v", manifest)
 	}
 	if err := writeHostManifest(path, "relative/path"); err == nil {

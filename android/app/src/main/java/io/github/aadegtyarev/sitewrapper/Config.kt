@@ -1,4 +1,4 @@
-package io.github.aadegtyarev.sitewrap
+package io.github.aadegtyarev.sitewrapper
 
 import android.content.Context
 import android.util.Base64
@@ -19,7 +19,7 @@ data class Config(val url: String, val zoom: Int, val mode: String, val language
 }
 
 class ConfigStore(context: Context) {
-    private val prefs = context.getSharedPreferences("sitewrap", Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences("site-wrapper", Context.MODE_PRIVATE)
     fun load(): Config? {
         if (!prefs.contains("url")) return null
         if (!prefs.contains("salt") || !prefs.contains("hash")) return null
