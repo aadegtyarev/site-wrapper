@@ -14,7 +14,7 @@ h2 { margin: 20px 0; font-size: 1.1rem; }
 .field { margin: 0 0 20px; }
 label { display: block; margin-bottom: 7px; font-size: .9rem; font-weight: 680; }
 input, select { width: 100%; min-height: 46px; padding: 10px 13px; border: 1px solid #bfccd4; border-radius: 10px; font: inherit; color: inherit; background: white; }
-input:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid #61b7c8; outline-offset: 2px; }
+input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #61b7c8; outline-offset: 2px; }
 input[aria-invalid="true"] { border-color: #b44750; }
 small { display: block; margin-top: 5px; color: #647788; font-size: .8rem; }
 .field-error { color: #a42b39; font-weight: 600; }
@@ -27,7 +27,8 @@ button { min-height: 46px; padding: 10px 18px; border-radius: 10px; font: inheri
 .secondary { color: #274357; background: white; border: 1px solid #bdcbd3; }
 button:disabled { cursor: wait; opacity: .6; }
 .notice { padding: 12px 14px; margin-bottom: 18px; border: 1px solid #dfb5b8; border-radius: 10px; color: #82212c; background: #fff2f2; }
-footer { padding: 18px 2px; color: #748695; font-size: .8rem; text-align: right; }
+footer { display: flex; justify-content: space-between; gap: 12px; padding: 18px 2px; color: #748695; font-size: .8rem; }
+footer a { color: #166b80; }
 [hidden] { display: none !important; }
 @media (max-width: 520px) { .shell { padding: 16px; } .card { border-radius: 16px; } .grid { grid-template-columns: 1fr; gap: 0; } .actions { flex-direction: column-reverse; align-items: stretch; } button { width: 100%; } }
 @media (prefers-reduced-motion: no-preference) { button { transition: background-color .15s ease; } }

@@ -169,6 +169,22 @@ class MainActivity : Activity() {
         val confirmation = field(word("confirm"), true).also(content::addView)
         val versionName = packageManager.getPackageInfo(packageName, 0).versionName
         val version = label(content, getString(R.string.version_format, word("version"), versionName))
+        val repository = label(content, word("repository")).apply {
+            setTextColor(Color.rgb(29, 90, 145))
+            paintFlags = paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
+            minHeight = dp(48)
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                try {
+                    val link = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/aadegtyarev/firefox-site-wrapper"))
+                    startActivity(Intent.createChooser(link, text))
+                } catch (failure: Exception) {
+                    Log.e("Sitewrap", "Repository link failed", failure)
+                    Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
         val error = label(content, "")
         val save = button(content, word("save")) {
             val draft = Config(url.text.toString().trim(), zoom.text.toString().toIntOrNull() ?: -1,
@@ -215,6 +231,7 @@ class MainActivity : Activity() {
                 password.hint = t("newPassword"); password.contentDescription = t("newPassword")
                 confirmation.hint = t("confirm"); confirmation.contentDescription = t("confirm")
                 version.text = getString(R.string.version_format, t("version"), versionName)
+                repository.text = t("repository")
                 save.text = t("save"); cancel?.text = t("cancel")
                 val selectedMode = mode.selectedItemPosition
                 mode.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, listOf(t("window"), t("kiosk")))
