@@ -21,6 +21,9 @@ import android.widget.Spinner
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import org.json.JSONObject
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
@@ -29,6 +32,7 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoView
 import org.mozilla.geckoview.WebExtension
 import org.mozilla.geckoview.WebRequestError
+import java.util.Locale
 
 class MainActivity : Activity() {
     companion object { private var sharedRuntime: GeckoRuntime? = null }
@@ -86,6 +90,13 @@ class MainActivity : Activity() {
 
     private fun word(key: String) = Words.get(config?.language ?: "en", key)
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
+    private fun setKiosk(enabled: Boolean) {
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        if (enabled) {
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+        } else controller.show(WindowInsetsCompat.Type.systemBars())
+    }
     private fun field(label: String, password: Boolean = false): EditText {
         val input = EditText(this)
         input.hint = label
@@ -96,7 +107,7 @@ class MainActivity : Activity() {
         return input
     }
     private fun layout(title: String): LinearLayout {
-        window.decorView.systemUiVisibility = 0
+        setKiosk(false)
         root.removeAllViews()
         val content = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
@@ -140,7 +151,7 @@ class MainActivity : Activity() {
         val content = layout(word("settings"))
         val saved = config ?: Config("", 100, "window", "en")
         val url = field(word("url")).also { it.setText(saved.url); content.addView(it) }
-        val zoom = field(word("zoom")).also { it.inputType = InputType.TYPE_CLASS_NUMBER; it.setText(saved.zoom.toString()); content.addView(it) }
+        val zoom = field(word("zoom")).also { it.inputType = InputType.TYPE_CLASS_NUMBER; it.setText(String.format(Locale.ROOT, "%d", saved.zoom)); content.addView(it) }
         val modeLabel = label(content, word("mode"))
         val mode = Spinner(this).also {
             it.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOf(word("window"), word("kiosk")))
@@ -153,7 +164,8 @@ class MainActivity : Activity() {
         }
         val password = field(word("newPassword"), true).also(content::addView)
         val confirmation = field(word("confirm"), true).also(content::addView)
-        val version = label(content, "${word("version")}: ${packageManager.getPackageInfo(packageName, 0).versionName}")
+        val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+        val version = label(content, getString(R.string.version_format, word("version"), versionName))
         val error = label(content, "")
         val save = button(content, word("save")) {
             val draft = Config(url.text.toString().trim(), zoom.text.toString().toIntOrNull() ?: -1,
@@ -199,7 +211,7 @@ class MainActivity : Activity() {
                 modeLabel.text = t("mode"); languageLabel.text = t("language")
                 password.hint = t("newPassword"); password.contentDescription = t("newPassword")
                 confirmation.hint = t("confirm"); confirmation.contentDescription = t("confirm")
-                version.text = "${t("version")}: ${packageManager.getPackageInfo(packageName, 0).versionName}"
+                version.text = getString(R.string.version_format, t("version"), versionName)
                 save.text = t("save"); cancel?.text = t("cancel")
                 val selectedMode = mode.selectedItemPosition
                 mode.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, listOf(t("window"), t("kiosk")))
@@ -212,7 +224,7 @@ class MainActivity : Activity() {
         session?.close()
         session = null
         root.removeAllViews()
-        window.decorView.systemUiVisibility = if (saved.mode == "kiosk") 5894 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY else 0
+        setKiosk(saved.mode == "kiosk")
         if (saved.mode == "kiosk") window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val view = GeckoView(this)
         root.addView(view, FrameLayout.LayoutParams(-1, -1))

@@ -1,0 +1,3 @@
+<resources>
+    <string name="version_format">%1$s: %2$s</string>
+</resources>
