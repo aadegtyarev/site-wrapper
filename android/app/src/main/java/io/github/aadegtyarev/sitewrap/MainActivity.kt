@@ -19,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.ArrayAdapter
+import android.widget.AdapterView
 import android.widget.TextView
 import org.json.JSONObject
 import org.mozilla.geckoview.GeckoResult
@@ -36,6 +37,7 @@ class MainActivity : Activity() {
     private var config: Config? = null
     private var launchUrl: String? = null
     private var session: GeckoSession? = null
+    private var currentUrl: String? = null
     private val handler = Handler(Looper.getMainLooper())
     private var gesture: Runnable? = null
 
@@ -62,6 +64,7 @@ class MainActivity : Activity() {
             return
         }
         launchUrl = candidate
+        currentUrl = candidate
         if (config != null) showSite()
     }
 
@@ -129,21 +132,21 @@ class MainActivity : Activity() {
         val saved = config ?: Config("", 100, "window", "en")
         val url = field(word("url")).also { it.setText(saved.url); content.addView(it) }
         val zoom = field(word("zoom")).also { it.inputType = InputType.TYPE_CLASS_NUMBER; it.setText(saved.zoom.toString()); content.addView(it) }
-        label(content, word("mode"))
+        val modeLabel = label(content, word("mode"))
         val mode = Spinner(this).also {
             it.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOf(word("window"), word("kiosk")))
             it.setSelection(if (saved.mode == "kiosk") 1 else 0); content.addView(it)
         }
-        label(content, word("language"))
+        val languageLabel = label(content, word("language"))
         val language = Spinner(this).also {
             it.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOf("English", "Deutsch", "Қазақша", "Italiano"))
             it.setSelection(listOf("en", "de", "kk", "it").indexOf(saved.language).coerceAtLeast(0)); content.addView(it)
         }
         val password = field(word("newPassword"), true).also(content::addView)
         val confirmation = field(word("confirm"), true).also(content::addView)
-        label(content, "${word("version")}: ${packageManager.getPackageInfo(packageName, 0).versionName}")
+        val version = label(content, "${word("version")}: ${packageManager.getPackageInfo(packageName, 0).versionName}")
         val error = label(content, "")
-        button(content, word("save")) {
+        val save = button(content, word("save")) {
             val draft = Config(url.text.toString().trim(), zoom.text.toString().toIntOrNull() ?: -1,
                 if (mode.selectedItemPosition == 1) "kiosk" else "window", listOf("en", "de", "kk", "it")[language.selectedItemPosition])
             val failure = draft.error() ?: when {
@@ -152,19 +155,48 @@ class MainActivity : Activity() {
                 password.text.toString() != confirmation.text.toString() -> "passwordMismatch"
                 else -> null
             }
-            if (failure != null) { error.text = Words.get(draft.language, failure); return@button }
+            if (failure != null) {
+                val message = Words.get(draft.language, failure)
+                when (failure) {
+                    "invalidUrl" -> url.error = message
+                    "invalidZoom" -> zoom.error = message
+                    "passwordShort" -> password.error = message
+                    "passwordMismatch" -> confirmation.error = message
+                    else -> error.text = message
+                }
+                return@button
+            }
             try {
                 if (!store.save(draft, password.text.toString().takeIf { it.isNotEmpty() })) {
                     error.text = word("saveFailed"); return@button
                 }
                 config = draft
+                if (launchUrl == null) currentUrl = draft.url
                 showSite()
             } catch (failure: Exception) {
                 Log.e("Sitewrap", "Settings save failed", failure)
                 error.text = word("saveFailed")
             }
         }
-        if (!first) button(content, word("cancel")) { showSite() }
+        val cancel = if (!first) button(content, word("cancel")) { showSite() } else null
+        language.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selected = listOf("en", "de", "kk", "it")[position]
+                fun t(key: String) = Words.get(selected, key)
+                (content.getChildAt(0) as TextView).text = t("settings")
+                url.hint = t("url"); url.contentDescription = t("url")
+                zoom.hint = t("zoom"); zoom.contentDescription = t("zoom")
+                modeLabel.text = t("mode"); languageLabel.text = t("language")
+                password.hint = t("newPassword"); password.contentDescription = t("newPassword")
+                confirmation.hint = t("confirm"); confirmation.contentDescription = t("confirm")
+                version.text = "${t("version")}: ${packageManager.getPackageInfo(packageName, 0).versionName}"
+                save.text = t("save"); cancel?.text = t("cancel")
+                val selectedMode = mode.selectedItemPosition
+                mode.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, listOf(t("window"), t("kiosk")))
+                mode.setSelection(selectedMode)
+            }
+        }
     }
     private fun showSite() {
         val saved = config ?: return
@@ -190,6 +222,11 @@ class MainActivity : Activity() {
                 return null
             }
         })
+        opened.setProgressDelegate(object : GeckoSession.ProgressDelegate {
+            override fun onPageStart(session: GeckoSession, url: String) {
+                if (url.startsWith("http://") || url.startsWith("https://")) currentUrl = url
+            }
+        })
         opened.open(runtime)
         view.setSession(opened)
         runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@sitewrap").accept({ extension: WebExtension ->
@@ -199,7 +236,7 @@ class MainActivity : Activity() {
                     return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
                 }
             }, "sitewrap")
-            opened.loadUri(launchUrl ?: saved.url)
+            opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
         }, { failure: Throwable ->
             Log.e("Sitewrap", "Zoom extension failed", failure)
             runOnUiThread { showError("extensionFailed") { showSite() } }

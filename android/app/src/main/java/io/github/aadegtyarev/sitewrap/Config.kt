@@ -22,6 +22,7 @@ class ConfigStore(context: Context) {
     private val prefs = context.getSharedPreferences("sitewrap", Context.MODE_PRIVATE)
     fun load(): Config? {
         if (!prefs.contains("url")) return null
+        if (!prefs.contains("salt") || !prefs.contains("hash")) return null
         return Config(prefs.getString("url", "") ?: "", prefs.getInt("zoom", 100), prefs.getString("mode", "window") ?: "window", prefs.getString("language", "en") ?: "en")
             .takeIf { it.error() == null }
     }
