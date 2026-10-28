@@ -3,6 +3,7 @@ package io.github.aadegtyarev.sitewrap
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,11 +22,13 @@ import android.widget.Spinner
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import org.json.JSONObject
 import org.mozilla.geckoview.GeckoResult
+import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
 import org.mozilla.geckoview.GeckoSession
@@ -237,6 +240,24 @@ class MainActivity : Activity() {
         val opened = GeckoSession()
         session = opened
         opened.setNavigationDelegate(object : GeckoSession.NavigationDelegate {
+            override fun onLoadRequest(session: GeckoSession, request: GeckoSession.NavigationDelegate.LoadRequest): GeckoResult<AllowOrDeny>? {
+                val scheme = runCatching { Uri.parse(request.uri).scheme?.lowercase(Locale.ROOT) }.getOrNull()
+                if (scheme == "http" || scheme == "https") {
+                    if (request.target != GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) return null
+                    session.loadUri(request.uri)
+                    return GeckoResult.fromValue(AllowOrDeny.DENY)
+                }
+                if (request.hasUserGesture) {
+                    if (scheme in listOf("mailto", "tel", "sms", "geo")) {
+                        try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(request.uri))) }
+                        catch (failure: Exception) {
+                            Log.e("Sitewrap", "External link failed", failure)
+                            Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
+                        }
+                    } else Toast.makeText(this@MainActivity, word("unsupportedLink"), Toast.LENGTH_LONG).show()
+                }
+                return GeckoResult.fromValue(AllowOrDeny.DENY)
+            }
             override fun onLoadError(session: GeckoSession, uri: String?, error: WebRequestError): GeckoResult<String>? {
                 Log.e("Sitewrap", "Site load failed: ${error.code}")
                 runOnUiThread { showError("loadFailed") { showSite() } }

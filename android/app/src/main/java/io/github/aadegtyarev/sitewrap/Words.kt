@@ -12,7 +12,8 @@ object Words {
         "incorrectPassword" to "Incorrect password. Try again.", "saveFailed" to "Changes were not saved. Check device storage and try again.",
         "loadFailed" to "The site could not load. Check your connection or change the URL in settings.",
         "configFailed" to "Settings could not be read. Check device storage or reinstall Sitewrap.",
-        "extensionFailed" to "Page zoom could not be enabled. Restart or reinstall Sitewrap."
+        "extensionFailed" to "Page zoom could not be enabled. Restart or reinstall Sitewrap.",
+        "unsupportedLink" to "This link needs another app or a web address."
     )
     private val de = mapOf(
         "settings" to "Einstellungen", "unlock" to "Einstellungen entsperren", "password" to "Passwort für Einstellungen", "open" to "Entsperren",
@@ -25,7 +26,8 @@ object Words {
         "incorrectPassword" to "Falsches Passwort. Erneut versuchen.", "saveFailed" to "Änderungen nicht gespeichert. Gerätespeicher prüfen und erneut versuchen.",
         "loadFailed" to "Website konnte nicht geladen werden. Verbindung prüfen oder Adresse in den Einstellungen ändern.",
         "configFailed" to "Einstellungen konnten nicht gelesen werden. Gerätespeicher prüfen oder Sitewrap neu installieren.",
-        "extensionFailed" to "Seitenzoom konnte nicht aktiviert werden. Sitewrap neu starten oder neu installieren."
+        "extensionFailed" to "Seitenzoom konnte nicht aktiviert werden. Sitewrap neu starten oder neu installieren.",
+        "unsupportedLink" to "Für diesen Link wird eine andere App oder eine Webadresse benötigt."
     )
     private val kk = mapOf(
         "settings" to "Баптаулар", "unlock" to "Баптауларды ашу", "password" to "Баптаулар құпиясөзі", "open" to "Ашу",
@@ -38,7 +40,8 @@ object Words {
         "incorrectPassword" to "Құпиясөз қате. Қайталап көріңіз.", "saveFailed" to "Өзгерістер сақталмады. Құрылғы жадын тексеріп, қайталаңыз.",
         "loadFailed" to "Сайт жүктелмеді. Байланысты тексеріңіз немесе баптаулардан мекенжайды өзгертіңіз.",
         "configFailed" to "Баптаулар оқылмады. Құрылғы жадын тексеріңіз немесе Sitewrap қолданбасын қайта орнатыңыз.",
-        "extensionFailed" to "Бет масштабы қосылмады. Sitewrap қолданбасын қайта іске қосыңыз немесе орнатыңыз."
+        "extensionFailed" to "Бет масштабы қосылмады. Sitewrap қолданбасын қайта іске қосыңыз немесе орнатыңыз.",
+        "unsupportedLink" to "Бұл сілтеме үшін басқа қолданба немесе веб-мекенжай қажет."
     )
     private val it = mapOf(
         "settings" to "Impostazioni", "unlock" to "Sblocca le impostazioni", "password" to "Password delle impostazioni", "open" to "Sblocca",
@@ -51,7 +54,8 @@ object Words {
         "incorrectPassword" to "Password errata. Riprova.", "saveFailed" to "Modifiche non salvate. Controlla la memoria del dispositivo e riprova.",
         "loadFailed" to "Impossibile caricare il sito. Controlla la connessione o modifica l'indirizzo nelle impostazioni.",
         "configFailed" to "Impossibile leggere le impostazioni. Controlla la memoria o reinstalla Sitewrap.",
-        "extensionFailed" to "Impossibile attivare lo zoom. Riavvia o reinstalla Sitewrap."
+        "extensionFailed" to "Impossibile attivare lo zoom. Riavvia o reinstalla Sitewrap.",
+        "unsupportedLink" to "Questo link richiede un'altra app o un indirizzo web."
     )
     fun get(language: String, key: String) = mapOf("de" to de, "kk" to kk, "it" to it)[language]?.get(key) ?: en[key] ?: key
 }
