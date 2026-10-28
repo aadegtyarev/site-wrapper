@@ -1,5 +1,8 @@
 /bin/
 /dist/
+/android/.gradle/
+/android/build/
+/android/app/build/
 /.idea/
 /.vscode/
 *.test
