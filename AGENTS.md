@@ -12,8 +12,8 @@
 <!-- END ad-pi-addons contract workflow -->
 
 ## Project-specific commands and conventions
-- Stack and important paths: Go 1.25 for desktop core under `internal/settings/`; `README.md` is the product outline, `docs/contracts/` holds the contract workflow. Android is proposed but not implemented.
-- Tests / typecheck / build: `make check` runs Go formatting, vet, and tests in Docker; `git diff --check` checks whitespace.
+- Stack and important paths: Go 1.25 in `cmd/` and `internal/`, Firefox extension in `extension/`, Android GeckoView app in `android/`, contracts in `docs/contracts/`.
+- Tests / typecheck / build: `make check` runs Go formatting, vet, tests, JavaScript tests and Firefox extension lint in Docker; `git diff --check` checks whitespace. CI builds desktop artifacts and an Android debug APK.
 - Formatting and style: `gofmt` for Go; keep Markdown concise and link to the durable surface contracts once they exist.
 - Project-specific constraints: use ready-made Firefox on Linux/Windows and GeckoView on Android; support window and kiosk modes. Do not install pi-lens for this project.
 - Code changes must follow `docs/contracts/surfaces/code-quality.md` in addition to the affected product contracts.

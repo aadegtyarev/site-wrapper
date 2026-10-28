@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sitewrap settings</title>
+  <link rel="stylesheet" href="settings.css">
+  <script type="module" src="settings.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">S</span><span>Sitewrap</span></div>
+      <span id="setup-badge" class="badge" data-i18n="setup" hidden></span>
+    </header>
+    <section class="card">
+      <div class="intro"><h1 data-i18n="title"></h1><p data-i18n="subtitle"></p></div>
+      <div id="notice" class="notice" role="alert" hidden></div>
+      <form id="unlock-form" hidden>
+        <h2 data-i18n="unlockTitle"></h2>
+        <label for="unlock-password" data-i18n="password"></label>
+        <input id="unlock-password" type="password" autocomplete="current-password" required>
+        <button class="primary" type="submit" data-i18n="unlock"></button>
+      </form>
+      <form id="settings-form" hidden novalidate>
+        <div class="field"><label for="site-url" data-i18n="url"></label><input id="site-url" type="url" inputmode="url" autocomplete="url" placeholder="https://example.org" required><small id="url-error" class="field-error"></small></div>
+        <div class="grid">
+          <div class="field"><label for="zoom" data-i18n="zoom"></label><input id="zoom" type="number" min="30" max="500" step="1" required><small id="zoom-error" class="field-error"></small></div>
+          <div class="field"><label for="mode" data-i18n="mode"></label><select id="mode"><option value="window" data-i18n="window"></option><option value="kiosk" data-i18n="kiosk"></option></select></div>
+        </div>
+        <div class="field"><label for="language" data-i18n="language"></label><select id="language"><option value="en">English</option><option value="de">Deutsch</option><option value="kk">Қазақша</option><option value="it">Italiano</option></select></div>
+        <div class="divider"></div>
+        <div class="field"><label for="new-password" data-i18n="newPassword"></label><input id="new-password" type="password" autocomplete="new-password"><small id="password-hint" data-i18n="passwordHint"></small><small id="new-password-error" class="field-error"></small></div>
+        <div class="field"><label for="confirm-password" data-i18n="confirmPassword"></label><input id="confirm-password" type="password" autocomplete="new-password"><small id="confirm-password-error" class="field-error"></small></div>
+        <div class="actions"><button id="cancel" class="secondary" type="button" data-i18n="cancel"></button><button id="save" class="primary" type="submit" data-i18n="save"></button></div>
+      </form>
+    </section>
+    <footer><span data-i18n="version"></span> <span id="app-version">dev</span></footer>
+  </main>
+</body>
+</html>
