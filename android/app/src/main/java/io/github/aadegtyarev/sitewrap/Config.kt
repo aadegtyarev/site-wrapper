@@ -28,12 +28,10 @@ class ConfigStore(context: Context) {
     }
     fun hasConfig() = prefs.contains("url")
     fun verify(password: String): Boolean {
-        val salt = prefs.getString("salt", null) ?: return false
-        val expected = prefs.getString("hash", null) ?: return false
-        return runCatching {
-            val actual = derive(password, Base64.decode(salt, Base64.NO_WRAP))
-            java.security.MessageDigest.isEqual(actual, Base64.decode(expected, Base64.NO_WRAP))
-        }.getOrDefault(false)
+        val salt = prefs.getString("salt", null) ?: error("Missing password salt")
+        val expected = prefs.getString("hash", null) ?: error("Missing password verifier")
+        val actual = derive(password, Base64.decode(salt, Base64.NO_WRAP))
+        return java.security.MessageDigest.isEqual(actual, Base64.decode(expected, Base64.NO_WRAP))
     }
     fun save(config: Config, password: String?): Boolean {
         require(config.error() == null)

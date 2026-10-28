@@ -98,7 +98,11 @@ func runFirefox(override string) error {
 	}
 	firefox, err := desktop.FindFirefox()
 	if errors.Is(err, desktop.ErrFirefoxMissing) {
-		return fmt.Errorf("Firefox is required. Download it from %s", desktop.DownloadURL)
+		language := settings.English
+		if configured {
+			language = current.Language
+		}
+		return fmt.Errorf("%s: %w", desktop.MissingFirefoxMessage(language), err)
 	}
 	if err != nil {
 		return err

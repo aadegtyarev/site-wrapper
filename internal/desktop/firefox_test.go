@@ -3,7 +3,10 @@ package desktop
 import (
 	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
+
+	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
 )
 
 func TestFindFirefoxUsesExplicitBinary(t *testing.T) {
@@ -39,5 +42,12 @@ func TestFindFirefoxMissing(t *testing.T) {
 	_, err := findFirefox("linux", func(string) string { return "" }, func(string) (string, error) { return "", errors.New("missing") }, func(string) bool { return false })
 	if !errors.Is(err, ErrFirefoxMissing) {
 		t.Fatalf("got %v, want ErrFirefoxMissing", err)
+	}
+}
+
+func TestMissingFirefoxMessageUsesSelectedLanguageAndLink(t *testing.T) {
+	got := MissingFirefoxMessage(settings.German)
+	if !strings.Contains(got, "Firefox wird benötigt") || !strings.Contains(got, DownloadURL) {
+		t.Fatalf("unexpected message %q", got)
 	}
 }

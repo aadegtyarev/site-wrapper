@@ -7,11 +7,27 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+
+	"github.com/aadegtyarev/firefox-site-wrapper/internal/settings"
 )
 
 const DownloadURL = "https://www.firefox.com/"
 
 var ErrFirefoxMissing = errors.New("Firefox is not installed")
+
+func MissingFirefoxMessage(language settings.Language) string {
+	messages := map[settings.Language]string{
+		settings.English: "Firefox is required. Download it from",
+		settings.German:  "Firefox wird benötigt. Herunterladen von",
+		settings.Kazakh:  "Firefox қажет. Мына жерден жүктеп алыңыз:",
+		settings.Italian: "Firefox è necessario. Scaricalo da",
+	}
+	message := messages[language]
+	if message == "" {
+		message = messages[settings.English]
+	}
+	return message + " " + DownloadURL
+}
 
 func FindFirefox() (string, error) {
 	return findFirefox(runtime.GOOS, os.Getenv, exec.LookPath, regularFile)
@@ -27,7 +43,7 @@ func findFirefox(goos string, getenv func(string) string, lookPath func(string) 
 		if exists(override) {
 			return override, nil
 		}
-		return "", fmt.Errorf("FIREFOX_BINARY points to a missing file: %s", override)
+		return "", fmt.Errorf("%w: FIREFOX_BINARY points to a missing file: %s", ErrFirefoxMissing, override)
 	}
 	for _, name := range []string{"firefox", "firefox-esr", "firefox.exe"} {
 		if path, err := lookPath(name); err == nil && exists(path) {

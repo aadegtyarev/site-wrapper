@@ -48,7 +48,11 @@ class MainActivity : Activity() {
         root = FrameLayout(this)
         setContentView(root)
         launchUrl = intent.dataString?.takeIf { candidate -> Config(candidate, 100, "window", "en").error() == null }
-        if (intent.dataString != null && launchUrl == null) Log.w("Sitewrap", "Invalid external URL")
+        if (intent.dataString != null && launchUrl == null) {
+            Log.w("Sitewrap", "Invalid external URL")
+            showError("invalidUrl") { if (config == null) showSettings(true) else showSite() }
+            return
+        }
         when {
             store.hasConfig() && config == null -> showError("configFailed")
             config == null -> showSettings(true)
@@ -60,7 +64,7 @@ class MainActivity : Activity() {
         super.onNewIntent(intent)
         val candidate = intent.dataString ?: return
         if (Config(candidate, 100, "window", "en").error() != null) {
-            showError("invalidUrl")
+            showError("invalidUrl") { if (config == null) showSettings(true) else showSite() }
             return
         }
         launchUrl = candidate
@@ -122,8 +126,13 @@ class MainActivity : Activity() {
         val password = field(word("password"), true).also(content::addView)
         val error = label(content, "")
         button(content, word("open")) {
-            if (store.verify(password.text.toString())) showSettings(false)
-            else { error.text = word("incorrectPassword"); password.text.clear() }
+            try {
+                if (store.verify(password.text.toString())) showSettings(false)
+                else { error.text = word("incorrectPassword"); password.text.clear() }
+            } catch (failure: Exception) {
+                Log.e("Sitewrap", "Password verifier failed", failure)
+                error.text = word("configFailed")
+            }
         }
         button(content, word("cancel")) { showSite() }
     }
@@ -230,15 +239,18 @@ class MainActivity : Activity() {
         opened.open(runtime)
         view.setSession(opened)
         runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@sitewrap").accept({ extension: WebExtension? ->
-            if (extension == null) showError("extensionFailed") { showSite() }
-            else {
-                opened.webExtensionController.setMessageDelegate(extension, object : WebExtension.MessageDelegate {
-                    override fun onMessage(nativeApp: String, message: Any, sender: WebExtension.MessageSender): GeckoResult<Any> {
-                        val percent = if ((message as? JSONObject)?.optString("action") == "zoom") saved.zoom else 100
-                        return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
-                    }
-                }, "sitewrap")
-                opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
+            runOnUiThread {
+                if (this.session !== opened) return@runOnUiThread
+                if (extension == null) showError("extensionFailed") { showSite() }
+                else {
+                    opened.webExtensionController.setMessageDelegate(extension, object : WebExtension.MessageDelegate {
+                        override fun onMessage(nativeApp: String, message: Any, sender: WebExtension.MessageSender): GeckoResult<Any> {
+                            val percent = if ((message as? JSONObject)?.optString("action") == "zoom") saved.zoom else 100
+                            return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
+                        }
+                    }, "sitewrap")
+                    opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
+                }
             }
         }, { failure: Throwable? ->
             Log.e("Sitewrap", "Zoom extension failed", failure)
