@@ -30,12 +30,12 @@ import org.mozilla.geckoview.WebExtension
 import org.mozilla.geckoview.WebRequestError
 
 class MainActivity : Activity() {
+    companion object { private var sharedRuntime: GeckoRuntime? = null }
     private lateinit var store: ConfigStore
     private lateinit var root: FrameLayout
     private var config: Config? = null
     private var launchUrl: String? = null
     private var session: GeckoSession? = null
-    private var runtime: GeckoRuntime? = null
     private val handler = Handler(Looper.getMainLooper())
     private var gesture: Runnable? = null
 
@@ -179,7 +179,7 @@ class MainActivity : Activity() {
             val settings = Button(this).apply { text = "⚙"; contentDescription = word("settings"); setOnClickListener { showUnlock() } }
             root.addView(settings, FrameLayout.LayoutParams(dp(52), dp(52), Gravity.TOP or Gravity.END))
         }
-        val runtime = runtime ?: GeckoRuntime.create(this, GeckoRuntimeSettings.Builder().locales(arrayOf(saved.language)).build()).also { runtime = it }
+        val runtime = sharedRuntime ?: GeckoRuntime.create(applicationContext, GeckoRuntimeSettings.Builder().locales(arrayOf(saved.language)).build()).also { sharedRuntime = it }
         runtime.settings.setLocales(arrayOf(saved.language))
         val opened = GeckoSession()
         session = opened

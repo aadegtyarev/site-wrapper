@@ -13,4 +13,7 @@ android {
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
 }
 
-dependencies { implementation("org.mozilla.geckoview:geckoview:159.0.20261022150525") }
+dependencies {
+    implementation("org.mozilla.geckoview:geckoview:159.0.20261022150525")
+    testImplementation("junit:junit:4.13.2")
+}
