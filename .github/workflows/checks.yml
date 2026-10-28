@@ -51,11 +51,11 @@ jobs:
           GOOS: ${{ matrix.goos }}
           CGO_ENABLED: '0'
         run: go build -ldflags "-X main.version=${GITHUB_SHA::7}" -o "dist/${{ matrix.output }}" ./cmd/site-wrapper
-      - name: Package unsigned extension
-        run: python3 scripts/package-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
+      - name: Verify and package signed extension
+        run: python3 -B scripts/use-signed-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
       - uses: actions/upload-artifact@v6
         with:
-          name: desktop-${{ matrix.target }}-unsigned
+          name: desktop-${{ matrix.target }}
           path: dist/
   android-build:
     runs-on: ubuntu-latest

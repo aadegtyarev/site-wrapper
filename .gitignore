@@ -9,5 +9,6 @@
 *.apk
 *.aab
 *.xpi
+!/release/signed/*.xpi
 settings.json
 *.key

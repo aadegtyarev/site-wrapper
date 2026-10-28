@@ -17,7 +17,8 @@ func WriteProfilePreferences(profile string, language settings.Language) error {
 	if language != settings.English {
 		requested += ",en"
 	}
-	data := []byte(fmt.Sprintf("user_pref(\"intl.accept_languages\", %q);\nuser_pref(\"browser.shell.checkDefaultBrowser\", false);\n", requested))
+	// Firefox otherwise disables the signed XPI copied into a new dedicated profile.
+	data := []byte(fmt.Sprintf("user_pref(\"intl.accept_languages\", %q);\nuser_pref(\"browser.shell.checkDefaultBrowser\", false);\nuser_pref(\"extensions.autoDisableScopes\", 0);\n", requested))
 	if err := os.MkdirAll(profile, 0700); err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-.PHONY: check go-check extension-check desktop-package android-check
+.PHONY: check go-check extension-check extension-unsigned desktop-package android-check
 
 check: go-check extension-check
 
@@ -11,7 +11,11 @@ extension-check:
 desktop-package:
 	mkdir -p dist
 	docker run --rm --user $$(id -u):$$(id -g) --env GOCACHE=/tmp/gocache --env GOPATH=/tmp/gopath --volume "$$(pwd):/src" --workdir /src golang:1.25 go build -o dist/site-wrapper ./cmd/site-wrapper
-	docker run --rm --user $$(id -u):$$(id -g) --volume "$$(pwd):/src" --workdir /src python:3.13-alpine python scripts/package-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
+	docker run --rm --user $$(id -u):$$(id -g) --volume "$$(pwd):/src" --workdir /src python:3.13-alpine python -B scripts/use-signed-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
+
+extension-unsigned:
+	mkdir -p dist
+	docker run --rm --user $$(id -u):$$(id -g) --volume "$$(pwd):/src" --workdir /src python:3.13-alpine python -B scripts/package_extension.py dist/site-wrapper-unsigned.xpi
 
 android-check:
 	bash scripts/android-docker.sh

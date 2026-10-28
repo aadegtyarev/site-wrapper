@@ -15,7 +15,7 @@ func TestWriteProfilePreferences(t *testing.T) {
 		t.Fatal(err)
 	}
 	data, err := os.ReadFile(filepath.Join(profile, "user.js"))
-	if err != nil || !strings.Contains(string(data), `"kk,en"`) {
+	if err != nil || !strings.Contains(string(data), `"kk,en"`) || !strings.Contains(string(data), `user_pref("extensions.autoDisableScopes", 0);`) {
 		t.Fatalf("language preference = %q, %v", data, err)
 	}
 	if err := WriteProfilePreferences(profile, "unknown"); err == nil {
