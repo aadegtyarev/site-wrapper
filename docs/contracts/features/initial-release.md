@@ -27,7 +27,7 @@ Deliver a small Firefox-based site wrapper for Linux, Windows, and Android. It o
 
 ## Affected surfaces
 
-The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/ux.md), and [Settings screen](../surfaces/settings-screen.md). They currently describe the target behavior and must be reconciled with verified implementation before this feature contract is removed.
+The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/ux.md), [Settings screen](../surfaces/settings-screen.md), and [Code quality](../surfaces/code-quality.md). The product surfaces currently describe target behavior and must be reconciled with verified implementation before this feature contract is removed.
 
 ## Interfaces and constraints
 

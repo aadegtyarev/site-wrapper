@@ -16,3 +16,4 @@
 - Tests / typecheck / build: `make check` runs Go formatting, vet, and tests in Docker; `git diff --check` checks whitespace.
 - Formatting and style: `gofmt` for Go; keep Markdown concise and link to the durable surface contracts once they exist.
 - Project-specific constraints: use ready-made Firefox on Linux/Windows and GeckoView on Android; support window and kiosk modes. Do not install pi-lens for this project.
+- Code changes must follow `docs/contracts/surfaces/code-quality.md` in addition to the affected product contracts.
