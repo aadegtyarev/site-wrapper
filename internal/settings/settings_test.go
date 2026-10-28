@@ -71,3 +71,10 @@ func TestEffectiveURL(t *testing.T) {
 		t.Fatal("expected invalid override error")
 	}
 }
+
+func TestDefaults(t *testing.T) {
+	s := Defaults()
+	if s.Language != English || s.ZoomPercent != 100 || s.Mode != Window || s.Version != Version {
+		t.Fatalf("unexpected defaults: %+v", s)
+	}
+}

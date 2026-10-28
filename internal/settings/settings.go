@@ -36,6 +36,10 @@ type Settings struct {
 	PasswordHash string   `json:"password_hash"`
 }
 
+func Defaults() Settings {
+	return Settings{Version: Version, ZoomPercent: 100, Mode: Window, Language: English}
+}
+
 func ValidateURL(raw string) error {
 	if raw == "" || strings.ContainsAny(raw, "\x00\r\n\t") {
 		return errors.New("invalid URL")

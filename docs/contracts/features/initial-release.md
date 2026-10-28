@@ -14,6 +14,7 @@ Deliver a small Firefox-based site wrapper for Linux, Windows, and Android. It o
 - Android accepts an external URL through an Intent for a single launch; it is not stored.
 - In window mode, the site appears without browser tabs or address bar. In kiosk mode, it fills the screen.
 - Invalid URLs, invalid zoom values, absent Firefox, loading failures, and unavailable settings storage produce understandable errors.
+- If Firefox is absent on desktop, show a clear install prompt with a link to the official Mozilla download page, before attempting to enter kiosk mode.
 - English is selected by default. English, German, Kazakh, and Italian are the only language choices. The choice localizes the settings UI and sets the preferred language requested from the site.
 - Navigation initiated by the site stays in the wrapper where feasible; navigation to unsupported schemes is delegated to the OS or refused with an error.
 
@@ -26,7 +27,7 @@ Deliver a small Firefox-based site wrapper for Linux, Windows, and Android. It o
 
 ## Affected surfaces
 
-No durable surface contracts exist yet. At completion, record observed behavior under `docs/contracts/surfaces/` and remove this temporary feature contract.
+The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/ux.md), and [Settings screen](../surfaces/settings-screen.md). They currently describe the target behavior and must be reconciled with verified implementation before this feature contract is removed.
 
 ## Interfaces and constraints
 
@@ -35,6 +36,7 @@ No durable surface contracts exist yet. At completion, record observed behavior 
 - Language codes are `en`, `de`, `kk`, and `it`. The app version comes from build metadata and is not editable.
 - Accept only absolute `http://` and `https://` URLs without embedded credentials.
 - Desktop uses ready-made Firefox in a dedicated profile. Android uses GeckoView.
+- Desktop detects the system Firefox executable before launch. The application does not silently install Firefox.
 - Desktop settings open through a keyboard shortcut; Android kiosk settings open through a deliberate press gesture. Initial setup opens automatically. The settings UI shows URL, zoom control with numeric value, mode selection, language selection, password change, read-only version, and save/cancel actions.
 - Build and test locally inside Docker where practical. CI produces Linux, Windows, and Android artifacts; platform-specific behavior still requires platform validation.
 
