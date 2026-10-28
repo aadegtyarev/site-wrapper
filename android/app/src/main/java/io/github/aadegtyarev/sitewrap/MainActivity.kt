@@ -101,7 +101,7 @@ class MainActivity : Activity() {
         }
         val heading = TextView(this).apply { text = title; textSize = 26f; setTextColor(Color.rgb(22, 36, 56)); setPadding(0, 0, 0, dp(20)) }
         content.addView(heading)
-        val scroll = ScrollView(this).apply { fillViewport = true; addView(content) }
+        val scroll = ScrollView(this).apply { isFillViewport = true; addView(content) }
         root.addView(scroll)
         return content
     }
@@ -229,15 +229,18 @@ class MainActivity : Activity() {
         })
         opened.open(runtime)
         view.setSession(opened)
-        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@sitewrap").accept({ extension: WebExtension ->
-            opened.webExtensionController.setMessageDelegate(extension, object : WebExtension.MessageDelegate {
-                override fun onMessage(nativeApp: String, message: Any, sender: WebExtension.MessageSender): GeckoResult<Any> {
-                    val percent = if ((message as? JSONObject)?.optString("action") == "zoom") saved.zoom else 100
-                    return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
-                }
-            }, "sitewrap")
-            opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
-        }, { failure: Throwable ->
+        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/zoom/", "android-zoom@sitewrap").accept({ extension: WebExtension? ->
+            if (extension == null) showError("extensionFailed") { showSite() }
+            else {
+                opened.webExtensionController.setMessageDelegate(extension, object : WebExtension.MessageDelegate {
+                    override fun onMessage(nativeApp: String, message: Any, sender: WebExtension.MessageSender): GeckoResult<Any> {
+                        val percent = if ((message as? JSONObject)?.optString("action") == "zoom") saved.zoom else 100
+                        return GeckoResult.fromValue(JSONObject().put("percent", percent) as Any)
+                    }
+                }, "sitewrap")
+                opened.loadUri(currentUrl ?: launchUrl ?: saved.url)
+            }
+        }, { failure: Throwable? ->
             Log.e("Sitewrap", "Zoom extension failed", failure)
             runOnUiThread { showError("extensionFailed") { showSite() } }
         })
