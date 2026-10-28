@@ -102,7 +102,11 @@ func runFirefox(override string) error {
 		if configured {
 			language = current.Language
 		}
-		return fmt.Errorf("%s: %w", desktop.MissingFirefoxMessage(language), err)
+		message := desktop.MissingFirefoxMessage(language)
+		if err == desktop.ErrFirefoxMissing {
+			return errors.New(message)
+		}
+		return fmt.Errorf("%s (%v)", message, err)
 	}
 	if err != nil {
 		return err
