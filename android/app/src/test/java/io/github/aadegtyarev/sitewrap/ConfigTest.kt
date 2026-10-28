@@ -17,7 +17,7 @@ class ConfigTest {
     }
     @Test fun translationsCoverEnglishKeys() {
         for (language in listOf("en", "de", "kk", "it")) {
-            for (key in listOf("settings", "url", "zoom", "password", "save", "invalidUrl", "loadFailed", "unsupportedLink", "repository")) {
+            for (key in listOf("settings", "url", "zoom", "password", "save", "invalidUrl", "loadFailed", "unsupportedLink", "repository", "trademarkNotice")) {
                 assertEquals(false, Words.get(language, key) == key)
             }
         }

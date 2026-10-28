@@ -59,3 +59,7 @@ Desktop: `sitewrap [URL]`, `sitewrap run [URL]`, `sitewrap version`. Первы�
 - [Firefox WebExtensions: Native Messaging](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging)
 - [Firefox: параметры командной строки](https://firefox-source-docs.mozilla.org/browser/CommandLineParameters.html)
 - [GeckoView](https://firefox-source-docs.mozilla.org/mobile/android/geckoview/index.html)
+
+## Товарный знак
+
+Firefox is a trademark of the Mozilla Foundation in the U.S. and other countries. This project is independent and is not affiliated with Mozilla. Согласно [правилам Mozilla](https://www.mozilla.org/en-US/foundation/trademarks/policy/), эта атрибуция не даёт права использовать Firefox в названии стороннего приложения; перед выпуском название нужно согласовать с Mozilla либо выбрать независимое имя.

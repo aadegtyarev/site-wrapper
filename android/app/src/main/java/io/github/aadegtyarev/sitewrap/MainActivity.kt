@@ -185,6 +185,7 @@ class MainActivity : Activity() {
                 }
             }
         }
+        val trademarkNotice = label(content, word("trademarkNotice")).apply { textSize = 12f }
         val error = label(content, "")
         val save = button(content, word("save")) {
             val draft = Config(url.text.toString().trim(), zoom.text.toString().toIntOrNull() ?: -1,
@@ -232,6 +233,7 @@ class MainActivity : Activity() {
                 confirmation.hint = t("confirm"); confirmation.contentDescription = t("confirm")
                 version.text = getString(R.string.version_format, t("version"), versionName)
                 repository.text = t("repository")
+                trademarkNotice.text = t("trademarkNotice")
                 save.text = t("save"); cancel?.text = t("cancel")
                 val selectedMode = mode.selectedItemPosition
                 mode.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, listOf(t("window"), t("kiosk")))
