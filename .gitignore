@@ -1,0 +1,10 @@
+/bin/
+/dist/
+/.idea/
+/.vscode/
+*.test
+*.apk
+*.aab
+*.xpi
+settings.json
+*.key
