@@ -27,7 +27,7 @@ Deliver a small Firefox-based site wrapper for Linux, Windows, and Android. It o
 
 ## Affected surfaces
 
-The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/ux.md), [Settings screen](../surfaces/settings-screen.md), and [Code quality](../surfaces/code-quality.md). The product surfaces currently describe target behavior and must be reconciled with verified implementation before this feature contract is removed.
+The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/ux.md), [Settings screen](../surfaces/settings-screen.md), [Code quality](../surfaces/code-quality.md), and [CI test packages](../surfaces/test-packages.md). The product surfaces currently describe target behavior and must be reconciled with verified implementation before this feature contract is removed.
 
 ## Interfaces and constraints
 
@@ -39,6 +39,7 @@ The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/
 - Desktop detects the system Firefox executable before launch. The application does not silently install Firefox.
 - Desktop settings open through a keyboard shortcut; Android kiosk settings open through a deliberate press gesture. Initial setup opens automatically. The settings UI shows URL, zoom control with numeric value, mode selection, language selection, password change, read-only version, and save/cancel actions.
 - Build and test locally inside Docker where practical. CI produces Linux, Windows, and Android artifacts; platform-specific behavior still requires platform validation.
+- CI publishes separate test artifacts for Linux, Windows, and each Android ABI. Desktop artifacts include the signed XPI beside the executable; every artifact includes concise setup and test instructions.
 
 ## Acceptance criteria
 
@@ -47,7 +48,8 @@ The affected surfaces are [UI rules](../surfaces/ui.md), [UX rules](../surfaces/
 - Selected language is reflected in the settings UI and in the language preference visible to websites, subject to sites' own language selection rules.
 - Invalid input is rejected before modifying persisted settings.
 - Automated tests cover configuration validation, password verification, URL priority, native messaging or equivalent protocol, and settings UI behavior where practical.
-- CI runs formatting, static checks, tests, and artifact builds. Release instructions list remaining signing and device checks.
+- CI runs formatting, static checks, tests, and artifact builds. Release instructions list remaining device checks and any unsigned application packages.
+- Test artifacts can be downloaded independently, have clear platform names, and contain the files needed for a device check without rebuilding.
 
 ## Validation
 

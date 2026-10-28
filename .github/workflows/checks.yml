@@ -53,10 +53,14 @@ jobs:
         run: go build -ldflags "-X main.version=${GITHUB_SHA::7}" -o "dist/${{ matrix.output }}" ./cmd/site-wrapper
       - name: Verify and package signed extension
         run: python3 -B scripts/use-signed-extension.py dist/site-wrapper@aadegtyarev.github.io.xpi
+      - name: Add test instructions
+        run: cp docs/testing-packages.md dist/TESTING.md
       - uses: actions/upload-artifact@v6
         with:
-          name: desktop-${{ matrix.target }}
+          name: site-wrapper-${{ matrix.target }}-test
           path: dist/
+          if-no-files-found: error
+          retention-days: 30
   android-build:
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +80,32 @@ jobs:
       - name: Build debug APK
         working-directory: android
         run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --no-daemon
+      - name: Stage APKs for testing
+        run: |
+          set -euo pipefail
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            mkdir -p "dist/android-$abi"
+            cp "android/app/build/outputs/apk/debug/app-$abi-debug.apk" "dist/android-$abi/site-wrapper-$abi-debug.apk"
+            cp docs/testing-packages.md "dist/android-$abi/TESTING.md"
+          done
       - uses: actions/upload-artifact@v6
         with:
-          name: android-debug
-          path: android/app/build/outputs/apk/debug/*.apk
+          name: site-wrapper-android-arm64-v8a-test
+          path: dist/android-arm64-v8a/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+      - uses: actions/upload-artifact@v6
+        with:
+          name: site-wrapper-android-armeabi-v7a-test
+          path: dist/android-armeabi-v7a/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+      - uses: actions/upload-artifact@v6
+        with:
+          name: site-wrapper-android-x86_64-test
+          path: dist/android-x86_64/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

@@ -34,7 +34,7 @@
 
 ## Сборка и проверка
 
-Первый релиз описан в [контракте](docs/contracts/features/initial-release.md). Отдельные контракты задают [UI](docs/contracts/surfaces/ui.md), [UX](docs/contracts/surfaces/ux.md), [экран настроек](docs/contracts/surfaces/settings-screen.md) и [качество кода](docs/contracts/surfaces/code-quality.md).
+Первый релиз описан в [контракте](docs/contracts/features/initial-release.md). Отдельные контракты задают [UI](docs/contracts/surfaces/ui.md), [UX](docs/contracts/surfaces/ux.md), [экран настроек](docs/contracts/surfaces/settings-screen.md), [пакеты для тестирования](docs/contracts/surfaces/test-packages.md) и [качество кода](docs/contracts/surfaces/code-quality.md).
 
 Локальная проверка без установки Go в систему:
 
@@ -47,6 +47,8 @@ make android-check
 `make desktop-package` складывает исполняемый файл Linux и подписанное расширение в `dist/`. Их нужно держать рядом. Подписанный XPI хранится в `release/signed/`; сборка сверяет его с исходниками расширения и останавливается, если они изменились. Для новой версии выполните `make extension-unsigned`, отправьте полученный XPI в Mozilla Add-ons на [подпись в режиме `unlisted`](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/), замените подписанный файл и обновите его SHA-256 в `scripts/use-signed-extension.py`. Это расширение предназначено для Firefox на Linux и Windows; совместимость с Firefox for Android не заявляется, поскольку Android-приложение использует GeckoView и встроенное расширение. Для Windows CI собирает отдельный `.exe`. Desktop-артефакты CI содержат подписанное расширение.
 
 Для Android CI собирает отладочные APK отдельно для `arm64-v8a`, `armeabi-v7a` и `x86_64`. Выбирайте APK под архитектуру устройства; общий APK с тремя архитектурами был около 509 МБ. `make android-check` загружает SDK и Gradle в Docker-тома, запускает тесты, Lint и сборку, не устанавливая инструменты в систему. Первый запуск принимает лицензии Android SDK. GeckoView берётся как готовая зависимость Mozilla, браузер из исходников не собирается.
+
+Для проверки откройте [последний успешный запуск Checks](https://github.com/aadegtyarev/site-wrapper/actions/workflows/checks.yml) и скачайте нужный архив из раздела **Artifacts**: `site-wrapper-linux-test`, `site-wrapper-windows-test` или один из `site-wrapper-android-<ABI>-test`. Каждый архив содержит [инструкцию по проверке](docs/testing-packages.md); desktop-архивы содержат исполняемый файл и подписанный XPI рядом. Артефакты хранятся 30 дней.
 
 Desktop: `site-wrapper [URL]`, `site-wrapper run [URL]`, `site-wrapper version`. Первый запуск открывает настройку, затем сайт. Настройки открываются `Ctrl+Alt+S` или кнопкой в оконном режиме. Android принимает ссылку через системное действие «Открыть с помощью». В киоске Android настройки открываются удержанием двух пальцев 1,8 секунды.
 
