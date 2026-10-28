@@ -2,7 +2,7 @@ plugins { id("com.android.application") }
 
 android {
     namespace = "io.github.aadegtyarev.sitewrap"
-    compileSdk = 36
+    compileSdk { version = release(37) { minorApiLevel = 2 } }
     defaultConfig {
         applicationId = "io.github.aadegtyarev.sitewrap"
         minSdk = 26
